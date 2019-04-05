@@ -22,25 +22,25 @@ public class TennisGame2 implements TennisGame {
             score = "Deuce";
         }
 
-        if (P1point > 0 && P2point == 0) {
+        if (onlyPlayer1HasPoints()) {
             score = updateScoreWithPlayer1Winning();
         }
-        if (P2point > 0 && P1point == 0) {
+        if (onlyPlayer2HasPoint()) {
             score = updateScoreWithPlayer2Winning();
         }
 
-        if (isPlayer1Winning() && isBeforeAdvantage(P1point)) {
-            score = updateScoreBeforeAdvantageWhenPlayer1IsWinning();
+        if (isPlayer1Leading()) {
+            score = updateScoreWhenPlayer1Leads();
         }
-        if (isPlayer2Winning() && isBeforeAdvantage(P2point)) {
-            score = updateScoreBeforeAdvantageWhenPlayer2IsWinnning();
+        if (isPlayer2Leading()) {
+            score = updateScoreWhenPlayer2Leads();
         }
 
-        if (isPlayer1Winning() && isAdvantage(P2point)) {
+        if (hasPlayer1Advantage()) {
             score = "Advantage player1";
         }
 
-        if (isPlayer2Winning() && isAdvantage(P1point)) {
+        if (hasPlayer2Advantage()) {
             score = "Advantage player2";
         }
 
@@ -51,6 +51,30 @@ public class TennisGame2 implements TennisGame {
             score = "Win for player2";
         }
         return score;
+    }
+
+    private boolean onlyPlayer2HasPoint() {
+        return P2point > 0 && P1point == 0;
+    }
+
+    private boolean onlyPlayer1HasPoints() {
+        return P1point > 0 && P2point == 0;
+    }
+
+    private boolean isPlayer1Leading() {
+        return P1point > P2point && P1point < 4;
+    }
+
+    private boolean isPlayer2Leading() {
+        return P2point > P1point && P2point < 4;
+    }
+
+    private boolean hasPlayer1Advantage() {
+        return P1point > P2point && P2point >= 3;
+    }
+
+    private boolean hasPlayer2Advantage() {
+        return P2point > P1point && P1point >= 3;
     }
 
     private boolean hasPlayer2Won() {
@@ -92,7 +116,7 @@ public class TennisGame2 implements TennisGame {
         return score;
     }
 
-    private String updateScoreBeforeAdvantageWhenPlayer2IsWinnning() {
+    private String updateScoreWhenPlayer2Leads() {
         String score;
         if (P2point == 2)
             P2res = "Thirty";
@@ -106,7 +130,7 @@ public class TennisGame2 implements TennisGame {
         return score;
     }
 
-    private String updateScoreBeforeAdvantageWhenPlayer1IsWinning() {
+    private String updateScoreWhenPlayer1Leads() {
         String score;
         if (P1point == 2)
             P1res = "Thirty";
