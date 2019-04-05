@@ -31,13 +31,7 @@ public class TennisGame2 implements TennisGame {
             return "Deuce";
         }
         if (isEqualityGame(player1Point, player2Point) && player1Point < 4) {
-            if (player1Point == 0)
-                score = "Love";
-            if (player1Point == 1)
-                score = "Fifteen";
-            if (player1Point == 2)
-                score = "Thirty";
-            score += "-All";
+            return updateScoreBeforeAdvantageWhenEquality(player1Point);
         }
 
         if (isPlayerLeading(player1Point, player2Point)) {
@@ -81,6 +75,16 @@ public class TennisGame2 implements TennisGame {
 
 
         return score;
+    }
+
+    private String updateScoreBeforeAdvantageWhenEquality(int playerPoint) {
+        if (player1Point == 0)
+            return "Love-All";
+        if (player1Point == 1)
+            return "Fifteen-All";
+        if (player1Point == 2)
+            return "Thirty-All";
+        return "-All";
     }
 
     private boolean isDeuceGame(int player1Point, int player2Point) {
