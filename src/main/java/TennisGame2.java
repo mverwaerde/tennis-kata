@@ -30,12 +30,12 @@ public class TennisGame2 implements TennisGame {
         if (isPlayerLeading(player1Point, player2Point)) {
             player1Result = getPlayerPoint(player1Point);
             player2Result = "Love";
-            score = player1Result + "-" + player2Result;
+            score = writeScore(player1Result);
         }
         if (isPlayerLeading(player2Point, player1Point)) {
             player2Result = getPlayerPoint(player2Point);
             player1Result = "Love";
-            score = player1Result + "-" + player2Result;
+            score = writeScore(player1Result, player2Result);
         }
 
         if (player1Point > player2Point && player1Point < 4) {
@@ -47,7 +47,7 @@ public class TennisGame2 implements TennisGame {
                 player2Result = "Fifteen";
             if (player2Point == 2)
                 player2Result = "Thirty";
-            score = player1Result + "-" + player2Result;
+            score = writeScore(player1Result, player2Result);
         }
         if (player2Point > player1Point && player2Point < 4) {
             if (player2Point == 2)
@@ -58,7 +58,7 @@ public class TennisGame2 implements TennisGame {
                 player1Result = "Fifteen";
             if (player1Point == 2)
                 player1Result = "Thirty";
-            score = player1Result + "-" + player2Result;
+            score = writeScore(player1Result, player2Result);
         }
 
         if (player1Point > player2Point && player2Point >= 3) {
@@ -76,6 +76,10 @@ public class TennisGame2 implements TennisGame {
             score = "Win for player2";
         }
         return score;
+    }
+
+    private String writeScore(String player1Result, String player2Result) {
+        return player1Result + "-" + player2Result;
     }
 
     private boolean isPlayerLeading(int player1Point, int player2Point) {
