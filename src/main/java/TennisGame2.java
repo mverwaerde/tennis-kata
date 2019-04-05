@@ -15,10 +15,10 @@ public class TennisGame2 implements TennisGame {
 
     public String getScore() {
         String score = "";
-        if (P1point == P2point && P1point < 4) {
+        if (areScoresEqual() && isBeforeAdvantage(P1point)) {
             score = updateScoreBeforeAdvantageWhenEquality(score);
         }
-        if (P1point == P2point && P1point >= 3) {
+        if (areScoresEqual() && isAdvantage(P1point)) {
             score = "Deuce";
         }
 
@@ -29,18 +29,18 @@ public class TennisGame2 implements TennisGame {
             score = updateScoreWithPlayer2Winning();
         }
 
-        if (P1point > P2point && P1point < 4) {
+        if (P1point > P2point && isBeforeAdvantage(P1point)) {
             score = updateScoreBeforeAdvantageWhenPlayer1IsWinning();
         }
-        if (P2point > P1point && P2point < 4) {
+        if (P2point > P1point && isBeforeAdvantage(P2point)) {
             score = updateScoreBeforeAdvantageWhenPlayer2IsWinnning();
         }
 
-        if (P1point > P2point && P2point >= 3) {
+        if (P1point > P2point && isAdvantage(P2point)) {
             score = "Advantage player1";
         }
 
-        if (P2point > P1point && P1point >= 3) {
+        if (P2point > P1point && isAdvantage(P1point)) {
             score = "Advantage player2";
         }
 
@@ -51,6 +51,18 @@ public class TennisGame2 implements TennisGame {
             score = "Win for player2";
         }
         return score;
+    }
+
+    private boolean isAdvantage(int playerPoint) {
+        return playerPoint >= 3;
+    }
+
+    private boolean isBeforeAdvantage(int playerPoint) {
+        return playerPoint < 4;
+    }
+
+    private boolean areScoresEqual() {
+        return P1point == P2point;
     }
 
     private String updateScoreBeforeAdvantageWhenEquality(String score) {
