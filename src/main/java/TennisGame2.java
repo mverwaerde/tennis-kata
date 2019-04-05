@@ -27,19 +27,13 @@ public class TennisGame2 implements TennisGame {
         if (isEqualityGame(player1Point, player2Point) && player1Point >= 3)
             score = "Deuce";
 
-        if (player1Point > 0 && player2Point == 0) {
+        if (isPlayerLeading(player1Point, player2Point)) {
             player1Result = getPlayerPoint(player1Point);
             player2Result = "Love";
             score = player1Result + "-" + player2Result;
         }
-        if (player2Point > 0 && player1Point == 0) {
-            if (player2Point == 1)
-                player2Result = "Fifteen";
-            if (player2Point == 2)
-                player2Result = "Thirty";
-            if (player2Point == 3)
-                player2Result = "Forty";
-
+        if (isPlayerLeading(player2Point, player1Point)) {
+            player2Result = getPlayerPoint(player2Point);
             player1Result = "Love";
             score = player1Result + "-" + player2Result;
         }
@@ -83,6 +77,11 @@ public class TennisGame2 implements TennisGame {
         }
         return score;
     }
+
+    private boolean isPlayerLeading(int player1Point, int player2Point) {
+        return player1Point > 0 && player2Point == 0;
+    }
+
 
     private String getPlayerPoint(int playerPoint) {
         if (playerPoint == 1)
