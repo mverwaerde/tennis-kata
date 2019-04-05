@@ -29,28 +29,44 @@ public class TennisGame2 implements TennisGame {
             score = updateScoreWithPlayer2Winning();
         }
 
-        if (P1point > P2point && isBeforeAdvantage(P1point)) {
+        if (isPlayer1Winning() && isBeforeAdvantage(P1point)) {
             score = updateScoreBeforeAdvantageWhenPlayer1IsWinning();
         }
-        if (P2point > P1point && isBeforeAdvantage(P2point)) {
+        if (isPlayer2Winning() && isBeforeAdvantage(P2point)) {
             score = updateScoreBeforeAdvantageWhenPlayer2IsWinnning();
         }
 
-        if (P1point > P2point && isAdvantage(P2point)) {
+        if (isPlayer1Winning() && isAdvantage(P2point)) {
             score = "Advantage player1";
         }
 
-        if (P2point > P1point && isAdvantage(P1point)) {
+        if (isPlayer2Winning() && isAdvantage(P1point)) {
             score = "Advantage player2";
         }
 
-        if (P1point >= 4 && P2point >= 0 && (P1point - P2point) >= 2) {
+        if (hasPlayer1Won()) {
             score = "Win for player1";
         }
-        if (P2point >= 4 && P1point >= 0 && (P2point - P1point) >= 2) {
+        if (hasPlayer2Won()) {
             score = "Win for player2";
         }
         return score;
+    }
+
+    private boolean hasPlayer2Won() {
+        return P2point >= 4 && P1point >= 0 && (P2point - P1point) >= 2;
+    }
+
+    private boolean hasPlayer1Won() {
+        return P1point >= 4 && P2point >= 0 && (P1point - P2point) >= 2;
+    }
+
+    private boolean isPlayer2Winning() {
+        return P2point > P1point;
+    }
+
+    private boolean isPlayer1Winning() {
+        return P1point > P2point;
     }
 
     private boolean isAdvantage(int playerPoint) {
