@@ -35,14 +35,12 @@ public class TennisGame2 implements TennisGame {
         }
 
         if (isPlayerLeading(player1Point, player2Point)) {
-            player1Result = getPlayerPoint(player1Point);
-            player2Result = "Love";
-            score = writeScore(player1Result, player2Result);
+            return getLeadingPlayerScore(player1Point);
         }
         if (isPlayerLeading(player2Point, player1Point)) {
             player2Result = getPlayerPoint(player2Point);
             player1Result = "Love";
-            score = writeScore(player1Result, player2Result);
+            return writeScore(player1Result, player2Result);
         }
 
         if (player1Point > player2Point && player1Point < 4) {
@@ -77,12 +75,18 @@ public class TennisGame2 implements TennisGame {
         return score;
     }
 
+    private String getLeadingPlayerScore(int player1Point) {
+        String player1Result = getPlayerPoint(player1Point);
+        String player2Result = "Love";
+        return writeScore(player1Result, player2Result);
+    }
+
     private String updateScoreBeforeAdvantageWhenEquality(int playerPoint) {
-        if (player1Point == 0)
+        if (playerPoint == 0)
             return "Love-All";
-        if (player1Point == 1)
+        if (playerPoint == 1)
             return "Fifteen-All";
-        if (player1Point == 2)
+        if (playerPoint == 2)
             return "Thirty-All";
         return "-All";
     }
