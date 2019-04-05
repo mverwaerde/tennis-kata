@@ -15,6 +15,21 @@ public class TennisGame2 implements TennisGame {
 
     public String getScore() {
         String score = "";
+        if (isPlayerWinning(player1Point, player2Point)) {
+            return "Win for player1";
+        }
+        if (isPlayerWinning(player2Point, player1Point)) {
+            return "Win for player2";
+        }
+        if (isPlayerHasAdvantage(player1Point, player2Point)) {
+            return "Advantage player1";
+        }
+        if (isPlayerHasAdvantage(player2Point, player1Point)) {
+            return "Advantage player2";
+        }
+        if (isDeuceGame(player1Point, player2Point)) {
+            return "Deuce";
+        }
         if (isEqualityGame(player1Point, player2Point) && player1Point < 4) {
             if (player1Point == 0)
                 score = "Love";
@@ -24,13 +39,11 @@ public class TennisGame2 implements TennisGame {
                 score = "Thirty";
             score += "-All";
         }
-        if (isEqualityGame(player1Point, player2Point) && player1Point >= 3)
-            score = "Deuce";
 
         if (isPlayerLeading(player1Point, player2Point)) {
             player1Result = getPlayerPoint(player1Point);
             player2Result = "Love";
-            score = writeScore(player1Result);
+            score = writeScore(player1Result, player2Result);
         }
         if (isPlayerLeading(player2Point, player1Point)) {
             player2Result = getPlayerPoint(player2Point);
@@ -43,39 +56,43 @@ public class TennisGame2 implements TennisGame {
                 player1Result = "Thirty";
             if (player1Point == 3)
                 player1Result = "Forty";
+
             if (player2Point == 1)
                 player2Result = "Fifteen";
             if (player2Point == 2)
                 player2Result = "Thirty";
+
             score = writeScore(player1Result, player2Result);
         }
         if (player2Point > player1Point && player2Point < 4) {
+
             if (player2Point == 2)
                 player2Result = "Thirty";
             if (player2Point == 3)
                 player2Result = "Forty";
+
             if (player1Point == 1)
                 player1Result = "Fifteen";
             if (player1Point == 2)
                 player1Result = "Thirty";
+
             score = writeScore(player1Result, player2Result);
         }
 
-        if (player1Point > player2Point && player2Point >= 3) {
-            score = "Advantage player1";
-        }
 
-        if (player2Point > player1Point && player1Point >= 3) {
-            score = "Advantage player2";
-        }
-
-        if (player1Point >= 4 && player2Point >= 0 && (player1Point - player2Point) >= 2) {
-            score = "Win for player1";
-        }
-        if (player2Point >= 4 && player1Point >= 0 && (player2Point - player1Point) >= 2) {
-            score = "Win for player2";
-        }
         return score;
+    }
+
+    private boolean isDeuceGame(int player1Point, int player2Point) {
+        return player1Point == player2Point && player1Point >= 3;
+    }
+
+    private boolean isPlayerHasAdvantage(int player1Point, int player2Point) {
+        return player1Point > player2Point && player2Point >= 3;
+    }
+
+    private boolean isPlayerWinning(int player2Point, int player1Point) {
+        return player2Point >= 4 && player1Point >= 0 && (player2Point - player1Point) >= 2;
     }
 
     private String writeScore(String player1Result, String player2Result) {
