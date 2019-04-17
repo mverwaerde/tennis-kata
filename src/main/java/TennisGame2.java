@@ -38,26 +38,13 @@ public class TennisGame2 implements TennisGame {
             return getLeadingPlayerScore(player1Point);
         }
         if (isPlayerLeading(player2Point, player1Point)) {
-            player2Result = getPlayerPoint(player2Point);
-            player1Result = "Love";
-            return writeScore(player1Result, player2Result);
+            return writeScore("Love", getPlayerPoint(player2Point));
         }
 
-        if (player1Point > player2Point && player1Point < 4) {
-            if (player1Point == 2)
-                player1Result = "Thirty";
-            if (player1Point == 3)
-                player1Result = "Forty";
-
-            if (player2Point == 1)
-                player2Result = "Fifteen";
-            if (player2Point == 2)
-                player2Result = "Thirty";
-
-            score = writeScore(player1Result, player2Result);
+        if (isGameBeforeAdvantage(player1Point, player2Point)) {
+            score = getScoreBeforeAdvantage(player1Point, player2Point, player1Result, player2Result);
         }
-        if (player2Point > player1Point && player2Point < 4) {
-
+        if (!isGameBeforeAdvantage(player1Point, player2Point)) {
             if (player2Point == 2)
                 player2Result = "Thirty";
             if (player2Point == 3)
@@ -67,7 +54,6 @@ public class TennisGame2 implements TennisGame {
                 player1Result = "Fifteen";
             if (player1Point == 2)
                 player1Result = "Thirty";
-
             score = writeScore(player1Result, player2Result);
         }
 
@@ -75,10 +61,30 @@ public class TennisGame2 implements TennisGame {
         return score;
     }
 
-    private String getLeadingPlayerScore(int player1Point) {
-        String player1Result = getPlayerPoint(player1Point);
-        String player2Result = "Love";
-        return writeScore(player1Result, player2Result);
+    private String getScoreBeforeAdvantage(int player1Point, int player2Point, String player1Result, String player2Result) {
+        String score;
+        if (player1Point == 2)
+            player1Result = "Thirty";
+        if (player1Point == 3)
+            player1Result = "Forty";
+
+        if (player2Point == 1)
+            player2Result = "Fifteen";
+        if (player2Point == 2)
+            player2Result = "Thirty";
+
+        score = writeScore(player1Result, player2Result);
+        return score;
+    }
+
+    private boolean isGameBeforeAdvantage(int player1Point, int player2Point) {
+        return player1Point > player2Point && player1Point < 4;
+    }
+
+    private String getLeadingPlayerScore(int leadingPlayerPoint) {
+        String leadingPlayerResult = getPlayerPoint(leadingPlayerPoint);
+        String otherPlayer = "Love";
+        return writeScore(leadingPlayerResult, otherPlayer);
     }
 
     private String updateScoreBeforeAdvantageWhenEquality(int playerPoint) {
