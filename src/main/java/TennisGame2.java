@@ -42,7 +42,7 @@ public class TennisGame2 implements TennisGame {
         }
 
         if (isGameBeforeAdvantage(player1Point, player2Point)) {
-            score = getScoreBeforeAdvantage(player1Point, player2Point, player1Result, player2Result);
+            score = getScoreBeforeAdvantage(player1Point, player2Point);
         }
         if (!isGameBeforeAdvantage(player1Point, player2Point)) {
             if (player2Point == 2)
@@ -61,20 +61,28 @@ public class TennisGame2 implements TennisGame {
         return score;
     }
 
-    private String getScoreBeforeAdvantage(int player1Point, int player2Point, String player1Result, String player2Result) {
-        String score;
-        if (player1Point == 2)
-            player1Result = "Thirty";
-        if (player1Point == 3)
-            player1Result = "Forty";
+    private String getScoreBeforeAdvantage(int player1Point, int player2Point) {
 
-        if (player2Point == 1)
-            player2Result = "Fifteen";
-        if (player2Point == 2)
-            player2Result = "Thirty";
+        String player1Result = getWonPlayerScoreBeforeAdvantage(player1Point);
+        String player2Result = getLosePlayerScoreBeforeAdvantage(player2Point);
 
-        score = writeScore(player1Result, player2Result);
-        return score;
+        return writeScore(player1Result, player2Result);
+    }
+
+    private String getLosePlayerScoreBeforeAdvantage(int playerPoint) {
+        if (playerPoint == 1)
+            return "Fifteen";
+        if (playerPoint == 2)
+            return "Thirty";
+        return "";
+    }
+
+    private String getWonPlayerScoreBeforeAdvantage(int playerPoint) {
+        if (playerPoint == 2)
+            return "Thirty";
+        if (playerPoint == 3)
+            return "Forty";
+        return "";
     }
 
     private boolean isGameBeforeAdvantage(int player1Point, int player2Point) {
