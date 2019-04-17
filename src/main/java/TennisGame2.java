@@ -14,7 +14,6 @@ public class TennisGame2 implements TennisGame {
     }
 
     public String getScore() {
-        String score = "";
         if (isPlayerWinning(player1Point, player2Point)) {
             return "Win for player1";
         }
@@ -33,40 +32,31 @@ public class TennisGame2 implements TennisGame {
         if (isEqualityGame(player1Point, player2Point) && player1Point < 4) {
             return updateScoreBeforeAdvantageWhenEquality(player1Point);
         }
-
         if (isPlayerLeading(player1Point, player2Point)) {
             return getLeadingPlayerScore(player1Point);
         }
         if (isPlayerLeading(player2Point, player1Point)) {
             return writeScore("Love", getPlayerPoint(player2Point));
         }
-
         if (isGameBeforeAdvantage(player1Point, player2Point)) {
-            score = getScoreBeforeAdvantage(player1Point, player2Point);
+            return getScoreBeforeAdvantage(player1Point, player2Point);
         }
         if (!isGameBeforeAdvantage(player1Point, player2Point)) {
-            if (player2Point == 2)
-                player2Result = "Thirty";
-            if (player2Point == 3)
-                player2Result = "Forty";
-
-            if (player1Point == 1)
-                player1Result = "Fifteen";
-            if (player1Point == 2)
-                player1Result = "Thirty";
-            score = writeScore(player1Result, player2Result);
+            return getScoreBeforeAdvantageForSecondPlayer(player1Point, player2Point);
         }
+        return "";
+    }
 
-
-        return score;
+    private String getScoreBeforeAdvantageForSecondPlayer(int player1Point, int player2Point) {
+        String player1 = getLosePlayerScoreBeforeAdvantage(player1Point);
+        String player2 = getWonPlayerScoreBeforeAdvantage(player2Point);
+        return writeScore(player1, player2);
     }
 
     private String getScoreBeforeAdvantage(int player1Point, int player2Point) {
-
-        String player1Result = getWonPlayerScoreBeforeAdvantage(player1Point);
-        String player2Result = getLosePlayerScoreBeforeAdvantage(player2Point);
-
-        return writeScore(player1Result, player2Result);
+        String player1 = getWonPlayerScoreBeforeAdvantage(player1Point);
+        String player2 = getLosePlayerScoreBeforeAdvantage(player2Point);
+        return writeScore(player1, player2);
     }
 
     private String getLosePlayerScoreBeforeAdvantage(int playerPoint) {
