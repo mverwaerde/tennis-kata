@@ -3,8 +3,6 @@ public class TennisGame2 implements TennisGame {
     public int player1Point = 0;
     public int player2Point = 0;
 
-    public String player1Result = "";
-    public String player2Result = "";
     private String player1Name;
     private String player2Name;
 
@@ -29,6 +27,7 @@ public class TennisGame2 implements TennisGame {
         if (isDeuceGame(player1Point, player2Point)) {
             return "Deuce";
         }
+
         if (isEqualityGame(player1Point, player2Point) && player1Point < 4) {
             return updateScoreBeforeAdvantageWhenEquality(player1Point);
         }
@@ -103,8 +102,8 @@ public class TennisGame2 implements TennisGame {
         return player1Point > player2Point && player2Point >= 3;
     }
 
-    private boolean isPlayerWinning(int player2Point, int player1Point) {
-        return player2Point >= 4 && player1Point >= 0 && (player2Point - player1Point) >= 2;
+    private static boolean isPlayerWinning(int player1Point, int player2Point) {
+        return player1Point >= 4 && player2Point >= 0 && (player1Point - player2Point) >= 2;
     }
 
     private String writeScore(String player1Result, String player2Result) {
